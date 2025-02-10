@@ -5,4 +5,5 @@ import admin_role.views
 urlpatterns = [
     path('admin_add', admin_role.views.add),
     path('login', admin_role.views.login),
+    path('account_all', admin_role.views.account_all),
 ]

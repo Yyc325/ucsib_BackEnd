@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-i!0^dkxac6l6y-oltm5g=no@f(-ads&fov(8v0#1xl=dt9jbph
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*','192.168.1.119']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+
+    'admin_role.apps.AdminRoleConfig'
 ]
 
 MIDDLEWARE = [
@@ -76,12 +78,18 @@ if DEBUG:
     MIDDLEWARE.remove('django.middleware.csrf.CsrfViewMiddleware')
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "python_scene",
-        "USER": "root",
-        "PASSWORD": "Ulink84117",
-        "HOST": "127.0.0.1",
-        "PORT": 3306,
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'python_scene',
+        'USER': 'root',
+        'PASSWORD': 'fsssdfa',
+        'HOST': '127.0.0.1',
+        'PORT': 3306,
+        # 'OPTIONS': {
+        #     'client_flag': 'CLIENT_SECURE_CONNECTION',
+        # },
+        'OPTIONS': {
+            'auth_plugin': 'mysql_native_password',
+        }
     }
 }
 

@@ -17,9 +17,9 @@ class SimpleMiddleware:
         self.get_response = get_response
         # 需要放行的路径
         self.paths_to_exempt = [
-            '/admin_role/login',
-            '/admin_role/admin_add',
-            '/admin_role/test_add',
+            '/api/admin_role/login',
+            '/api/admin_role/admin_add',
+            '/api/admin_role/test_add',
         ]
 
     def __call__(self, request):

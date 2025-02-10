@@ -8,7 +8,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import connection, transaction
 from django.forms import model_to_dict
 
-from admin_role.models import Admin, Students, Teacher, Subject, Class, Score, Timetable
+from admin_role.models import Admin
 
 current_time = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
 
@@ -46,6 +46,27 @@ def identity_verification(phone, password, request):
     return generate_token(admin_data)
     # request.session["user"] = admin.id
 
+def account_all(name,phone):
+    try:
+        # 构建查询条件
+        query_conditions = {}
+
+        if name:
+            query_conditions['user_name__icontains'] = name  # 对管理员名字进行模糊查询
+        if phone:
+            query_conditions['phone__icontains'] = phone  # 对电话号码进行模糊查询
+
+        # 执行查询
+        admins = Admin.objects.filter(**query_conditions)
+
+        # 将查询结果转换为字典
+        admin_list = [model_to_dict(admin) for admin in admins]
+
+        # 返回 JSON 响应
+        return admin_list
+    except Exception as e:
+        # 处理异常，返回错误响应
+        raise Exception(e)
 
 SECRET_KEY = 'abcdasdfasd1243'
 EXPIRATION_HOURS = 72

@@ -45,3 +45,19 @@ def login(request):
             return JsonResponse({'status': 'error', 'message': str(e)})
     return JsonResponse({'status': 'invalid method'}, status=405)
 # Create your views here.
+
+@csrf_exempt
+def account_all(request):
+    if request.method == 'POST':
+        try:
+            admin_json = json.loads(request.body)
+            phone = admin_json.get('phone', '')
+            username = admin_json.get('userName', '')
+            teh_info = service.account_all(username,phone)
+            if teh_info:
+                return JsonResponse({'status': 'success', 'data': teh_info})
+            return JsonResponse({'status': 'false'})
+        except Exception as e:
+            logger.error(f"Error creating: {e}")
+            return JsonResponse({'status': 'error', 'message': str(e)})
+    return JsonResponse({'status': 'invalid method'}, status=405)
