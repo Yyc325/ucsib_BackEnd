@@ -4,7 +4,7 @@ from itertools import groupby
 from operator import itemgetter
 
 import jwt
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.db import connection, transaction
 from django.forms import model_to_dict
 
@@ -84,6 +84,10 @@ def generate_token(user_info):
 
 
 def identity_authorization(phone, identity):
+    valid_identities = {"admin", "teacher", "student", "parent"}
+    if identity not in valid_identities:
+        raise Exception(f"身份值错误: {identity}. 参考值： {valid_identities}")
+
     try:
         user = Admin.objects.get(phone=phone)
         user.identity = identity
