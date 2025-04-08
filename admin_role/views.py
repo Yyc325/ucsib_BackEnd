@@ -39,11 +39,14 @@ def login(request):
             phone = admin_json.get('phone', '')
             password = admin_json.get('password', '')
             token = service.identity_verification(phone, password, request)
-            return JsonResponse({'status': 'success', 'token': token})
+            identity = service.getIdentity(phone)
+            return JsonResponse({'status': 'success', 'token': token, 'identity': identity})
         except Exception as e:
             logger.error(f"Error creating: {e}")
             return JsonResponse({'status': 'error', 'message': str(e)})
     return JsonResponse({'status': 'invalid method'}, status=405)
+
+
 # Create your views here.
 
 @csrf_exempt
@@ -53,7 +56,7 @@ def account_all(request):
             admin_json = json.loads(request.body)
             phone = admin_json.get('phone', '')
             username = admin_json.get('userName', '')
-            teh_info = service.account_all(username,phone)
+            teh_info = service.account_all(username, phone)
             if teh_info:
                 return JsonResponse({'status': 'success', 'data': teh_info})
             return JsonResponse({'status': 'false'})
@@ -62,6 +65,7 @@ def account_all(request):
             return JsonResponse({'status': 'error', 'message': str(e)})
     return JsonResponse({'status': 'invalid method'}, status=405)
 
+
 @csrf_exempt
 def identity_authorization(request):
     if request.method == 'POST':
@@ -69,7 +73,7 @@ def identity_authorization(request):
             admin_json = json.loads(request.body)
             phone = admin_json.get('phone', '')
             identity = admin_json.get('identity', '')
-            teh_info = service.identity_authorization(phone,identity)
+            teh_info = service.identity_authorization(phone, identity)
             if teh_info:
                 return JsonResponse({'status': 'success', 'data': teh_info})
             return JsonResponse({'status': 'false'})

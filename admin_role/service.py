@@ -21,6 +21,7 @@ def create_admin(user_name, real_name, phone, password):
     Admin.objects.create(
         user_name=user_name,
         real_name=real_name,
+        identity='student',
         phone=phone,
         password=password,
         create_time=create_time  # 使用Django的timezone.now()获取当前时间
@@ -44,7 +45,11 @@ def identity_verification(phone, password, request):
         'phone': admin.phone,
     }
     return generate_token(admin_data)
-    # request.session["user"] = admin.id
+
+
+def getIdentity(phone):
+    admin = Admin.objects.get(phone=phone)
+    return admin.identity
 
 
 def account_all(name, phone):
@@ -61,13 +66,14 @@ def account_all(name, phone):
         admins = Admin.objects.filter(**query_conditions)
 
         # 将查询结果转换为字典
-        admin_list = [model_to_dict(admin) for admin in admins]
+        admin_list = [model_to_dict(admin, exclude=['password']) for admin in admins]
 
         # 返回 JSON 响应
         return admin_list
     except Exception as e:
         # 处理异常，返回错误响应
         raise Exception(e)
+
 
 SECRET_KEY = 'abcdasdfasd1243'
 EXPIRATION_HOURS = 72
