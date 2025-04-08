@@ -61,3 +61,19 @@ def account_all(request):
             logger.error(f"Error creating: {e}")
             return JsonResponse({'status': 'error', 'message': str(e)})
     return JsonResponse({'status': 'invalid method'}, status=405)
+
+@csrf_exempt
+def identity_authorization(request):
+    if request.method == 'POST':
+        try:
+            admin_json = json.loads(request.body)
+            phone = admin_json.get('phone', '')
+            identity = admin_json.get('identity', '')
+            teh_info = service.identity_authorization(phone,identity)
+            if teh_info:
+                return JsonResponse({'status': 'success', 'data': teh_info})
+            return JsonResponse({'status': 'false'})
+        except Exception as e:
+            logger.error(f"Error creating: {e}")
+            return JsonResponse({'status': 'error', 'message': str(e)})
+    return JsonResponse({'status': 'invalid method'}, status=405)

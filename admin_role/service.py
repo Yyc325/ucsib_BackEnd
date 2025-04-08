@@ -46,7 +46,8 @@ def identity_verification(phone, password, request):
     return generate_token(admin_data)
     # request.session["user"] = admin.id
 
-def account_all(name,phone):
+
+def account_all(name, phone):
     try:
         # 构建查询条件
         query_conditions = {}
@@ -80,3 +81,13 @@ def generate_token(user_info):
     }
     token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
     return token
+
+
+def identity_authorization(phone, identity):
+    try:
+        user = Admin.objects.get(phone=phone)
+        user.identity = identity
+        user.save()
+        return True  # 更新成功
+    except ObjectDoesNotExist:
+        return False
