@@ -4,6 +4,9 @@ import json
 from django.dispatch.dispatcher import logger
 from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.utils import timezone
 
 from admin_role import service
 
@@ -74,6 +77,43 @@ def identity_authorization(request):
             phone = admin_json.get('phone', '')
             identity = admin_json.get('identity', '')
             teh_info = service.identity_authorization(phone, identity)
+            if teh_info:
+                return JsonResponse({'status': 'success', 'data': teh_info})
+            return JsonResponse({'status': 'false'})
+        except Exception as e:
+            logger.error(f"Error creating: {e}")
+            return JsonResponse({'status': 'error', 'message': str(e)})
+    return JsonResponse({'status': 'invalid method'}, status=405)
+
+@csrf_exempt
+def add_notice(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        title = data.get('title')
+        subtitle = data.get('subtitle')
+        content = data.get('content')
+        publisher = data.get('publisher')
+        status = data.get('status')
+        publish_time = data.get('publishTime')
+        cover = data.get('cover')
+
+        try:
+            service.noticeCreate(title, subtitle, content, publisher, status, publish_time, cover)
+            return JsonResponse({'status': 'success'})
+        except Exception as e:
+            logger.error(f"Error creating: {e}")
+            return JsonResponse({'status': 'error', 'message': str(e)})
+    return JsonResponse({'status': 'invalid method'}, status=405)
+
+
+@csrf_exempt
+def query_notice(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            phone = data.get('phone', '')
+            publisher = data.get('publisher', '')
+            teh_info = service.noticeQuery(publisher, phone)
             if teh_info:
                 return JsonResponse({'status': 'success', 'data': teh_info})
             return JsonResponse({'status': 'false'})

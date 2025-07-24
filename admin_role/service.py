@@ -5,10 +5,9 @@ from operator import itemgetter
 
 import jwt
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
-from django.db import connection, transaction
 from django.forms import model_to_dict
 
-from admin_role.models import Admin
+from admin_role.models import Admin, Notice
 
 current_time = datetime.datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S")
 
@@ -101,3 +100,40 @@ def identity_authorization(phone, identity):
         return True  # 更新成功
     except ObjectDoesNotExist:
         return False
+
+
+def noticeCreate(title, subtitle, content, publisher, status, publish_time, cover):
+    create_time = current_time
+    Notice.objects.create(
+        title=title,
+        subtitle=subtitle,
+        content=content,
+        publisher=publisher,
+        status=status,
+        publish_time=publish_time,
+        cover=cover,
+        create_time=create_time  # 使用Django的timezone.now()获取当前时间
+    )
+
+
+def noticeQuery(publisher, phone):
+    try:
+        # 构建查询条件
+        query_conditions = {}
+
+        if publisher:
+            query_conditions['publisher__icontains'] = publisher  # 对管理员名字进行模糊查询
+        if phone:
+            query_conditions['phone__icontains'] = phone  # 对电话号码进行模糊查询
+
+        # 执行查询
+        admins = Notice.objects.filter(**query_conditions)
+
+        # 将查询结果转换为字典
+        admin_list = [model_to_dict(admin) for admin in admins]
+
+        # 返回 JSON 响应
+        return admin_list
+    except Exception as e:
+        # 处理异常，返回错误响应
+        raise Exception(e)
