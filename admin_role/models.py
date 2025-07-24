@@ -20,6 +20,8 @@ class Notice(models.Model):
     create_time = models.DateTimeField(auto_now_add=True)
     cover = models.CharField(max_length=255)
 
+    user = models.ForeignKey('Admin', on_delete=models.CASCADE, related_name='notices')
+
     class Meta:
         db_table = 'admin_role_notice'  # 指定数据库表
 

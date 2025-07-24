@@ -85,7 +85,7 @@ def identity_authorization(request):
             return JsonResponse({'status': 'error', 'message': str(e)})
     return JsonResponse({'status': 'invalid method'}, status=405)
 
-@csrf_exempt
+
 def add_notice(request):
     if request.method == 'POST':
         data = json.loads(request.body)
@@ -98,7 +98,8 @@ def add_notice(request):
         cover = data.get('cover')
 
         try:
-            service.noticeCreate(title, subtitle, content, publisher, status, publish_time, cover)
+            user_id = service.get_user_id_by_publisher(publisher)
+            service.noticeCreate(title, subtitle, content, publisher, status, publish_time, cover, user_id)
             return JsonResponse({'status': 'success'})
         except Exception as e:
             logger.error(f"Error creating: {e}")
@@ -106,7 +107,6 @@ def add_notice(request):
     return JsonResponse({'status': 'invalid method'}, status=405)
 
 
-@csrf_exempt
 def query_notice(request):
     if request.method == 'POST':
         try:
@@ -119,5 +119,73 @@ def query_notice(request):
             return JsonResponse({'status': 'false'})
         except Exception as e:
             logger.error(f"Error creating: {e}")
+            return JsonResponse({'status': 'error', 'message': str(e)})
+    return JsonResponse({'status': 'invalid method'}, status=405)
+
+# 获取通知列表
+def notice_list(request):
+    if request.method == 'POST':
+        try:
+            notice_json = json.loads(request.body)
+            title = notice_json.get('title', '')
+            status = notice_json.get('status', '')
+            notices = service.get_all_notices(title, status)
+            return JsonResponse({'status': 'success', 'data': notices})
+        except Exception as e:
+            logger.error(f"Error fetching notices: {e}")
+            return JsonResponse({'status': 'error', 'message': str(e)})
+    return JsonResponse({'status': 'invalid method'}, status=405)
+
+# 修改通知
+def notice_update(request):
+    if request.method == 'POST':
+        try:
+            notice_json = json.loads(request.body)
+            notice_id = notice_json.get('id')
+            update_data = {
+                'title': notice_json.get('title'),
+                'subtitle': notice_json.get('subtitle'),
+                'content': notice_json.get('content'),
+                'publisher': notice_json.get('publisher'),
+                'status': notice_json.get('status'),
+                'publishTime': notice_json.get('publishTime'),
+                'cover': notice_json.get('cover'),
+            }
+            update_data = {k: v for k, v in update_data.items() if v is not None}
+            notice = service.update_notice(notice_id, **update_data)
+            return JsonResponse({'status': 'success', 'data': notice})
+        except Exception as e:
+            logger.error(f"Error updating notice: {e}")
+            return JsonResponse({'status': 'error', 'message': str(e)})
+    return JsonResponse({'status': 'invalid method'}, status=405)
+
+# 删除通知
+def notice_delete(request):
+    if request.method == 'POST':
+        try:
+            notice_json = json.loads(request.body)
+            notice_id = notice_json.get('id')
+            result = service.delete_notice(notice_id)
+            if result:
+                return JsonResponse({'status': 'success'})
+            return JsonResponse({'status': 'false'})
+        except Exception as e:
+            logger.error(f"Error deleting notice: {e}")
+            return JsonResponse({'status': 'error', 'message': str(e)})
+    return JsonResponse({'status': 'invalid method'}, status=405)
+
+# 撤回通知
+def notice_withdraw(request):
+    if request.method == 'POST':
+        try:
+            notice_json = json.loads(request.body)
+            notice_id = notice_json.get('id')
+            if not notice_id or not str(notice_id).isdigit():
+                return JsonResponse({'status': 'error', 'message': '无效的 ID'}, status=400)
+            notice_id = int(notice_id)
+            notice = service.withdraw_notice(notice_id)
+            return JsonResponse({'status': 'success', 'data': notice})
+        except Exception as e:
+            logger.error(f"Error withdrawing notice: {e}")
             return JsonResponse({'status': 'error', 'message': str(e)})
     return JsonResponse({'status': 'invalid method'}, status=405)
