@@ -79,9 +79,15 @@ if DEBUG:
 DATABASES = {
     "default": {
         'ENGINE': 'django.db.backends.mysql',
-        'USER': 'root',
-        'PASSWORD': 'fsssdfa',
-        'HOST': '127.0.0.1',
+        # 'USER': 'wuyufeng',
+        # 'PASSWORD': 'wuyufeng',
+        # 'HOST': '192.168.0.166',
+        'NAME': 'python_scene',
+        'USER': 'wuyufeng',
+        # 'PASSWORD': 'fsssdfa',
+        'PASSWORD': 'wuyufeng',
+        'HOST': '192.168.0.166',
+
         'PORT': 3306,
         # 'OPTIONS': {
         #     'client_flag': 'CLIENT_SECURE_CONNECTION',
