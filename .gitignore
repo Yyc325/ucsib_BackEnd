@@ -1,0 +1,42 @@
+# JetBrains IDEs (PyCharm, IntelliJ, etc.)
+.idea/
+
+# Python build artifacts and caches
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+build/
+dist/
+*.egg-info/
+*.so
+
+# Virtual environment folders
+venv/
+env/
+.venv/
+*/venv/
+*/env/
+*/.venv/
+
+# Secret files (e.g., local settings, environment variables)
+*.env
+local_settings.py
+secret_key.txt
+
+# Operating System generated files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+
+# Coverage reports
+.coverage
+htmlcov/
+
+# Static files collected by Django
+/static/
+
+# Media files uploaded by users
+/media/
