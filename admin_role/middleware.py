@@ -20,6 +20,7 @@ class SimpleMiddleware:
             '/api/admin_role/login',
             '/api/admin_role/admin_add',
             '/api/admin_role/test_add',
+            '/api/admin_role/notices/published_by_location'
         ]
 
     def __call__(self, request):

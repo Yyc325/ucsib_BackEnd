@@ -134,3 +134,7 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+USE_TZ = True  # 启用时区支持
+TIME_ZONE = 'Asia/Shanghai'  # 设置默认时区为北京时间（CST）
+

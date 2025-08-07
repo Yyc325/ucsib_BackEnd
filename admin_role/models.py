@@ -18,11 +18,14 @@ class Notice(models.Model):
     status = models.CharField(max_length=255)
     publish_time = models.DateTimeField()
     create_time = models.DateTimeField(auto_now_add=True)
-    cover = models.CharField(max_length=255)
+    # cover = models.CharField(max_length=255)
+    cover = models.CharField(max_length=255, null=True, blank=True)  # 存储七牛云 URL
+    position_index = models.CharField(max_length=255)
+    publish_location = models.CharField(max_length=255)
 
     user = models.ForeignKey('Admin', on_delete=models.CASCADE, related_name='notices')
 
     class Meta:
-        db_table = 'admin_role_notice'  # 指定数据库表
+        db_table = 'admin_notice_copy1'  # 指定数据库表
 
 
