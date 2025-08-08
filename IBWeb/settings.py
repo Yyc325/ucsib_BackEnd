@@ -14,23 +14,24 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
-# DANGER: 生产环境中绝不能硬编码密钥！建议从环境变量中读取。
-# 例如: SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+# DANGER: In a production environment, never hardcode the secret key!
+# It's better to load it from an environment variable.
+# Example: SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 SECRET_KEY = "django-insecure-i!0^dkxac6l6y-oltm5g=no@f(-ads&fov(8v0#1xl=dt9jbph"
 
-# DANGER: 生产环境中绝不能开启 DEBUG 模式！
-# 建议从环境变量中读取，例如: DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
+# DANGER: In a production environment, DEBUG must be set to False!
+# It's better to load this from an environment variable as well.
 DEBUG = True
 
-# 安全修复：避免使用 ['*']，因为它会带来安全风险。
-# 在开发环境中，使用下面的配置更安全。生产环境中应填写您的域名。
+# SECURITY FIX: Using ['*'] is insecure. For development, it's safer
+# to specify local hosts. For production, list your actual domain(s).
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',  # 建议加回 Django 自带的后台管理应用
+    'django.contrib.admin',  # Recommended to add Django's built-in admin site
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -43,7 +44,7 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",  # 安全建议：不建议移除此中间件
+    "django.middleware.csrf.CsrfViewMiddleware",  # It's not recommended to remove this
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -77,20 +78,13 @@ DATABASES = {
     "default": {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'python_scene',
-        'USER': 'wuyufeng',
-        # DANGER: 生产环境中密码也应该从环境变量读取
-        'PASSWORD': 'wuyufeng',
-        'HOST': '192.168.0.166',
+        'USER': 'root',
+        # DANGER: In a production environment, never hardcode passwords!
+        'PASSWORD': '123456',
+        'HOST': '127.0.0.1',
         'PORT': 3306,
-        # 错误修复：移除了导致 TypeError 的 OPTIONS 配置。
-        # 'OPTIONS': {
-        #     'client_flag': 'CLIENT_SECURE_CONNECTION',
-        # }
     }
 }
-
-# 之前在 DEBUG 判断中移除 CSRF 中间件的逻辑已删除，因为这通常是不安全的做法。
-# 如果需要对特定视图禁用 CSRF，请使用 @csrf_exempt 装饰器。
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -112,14 +106,18 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Internationalization
-# https://docs.djangoproject.com/en/5.1/topics/i18n/
+# https://docs.djangoproject.com/en/5.1/topics/i1n/
 
-LANGUAGE_CODE = "en-us" # 或 "zh-hans"
+# You can change this to 'zh-hans' for Chinese
+LANGUAGE_CODE = "en-us"
 
-# 代码整理：将时区相关的设置集中在这里
+# Consolidated the timezone settings here for clarity
 TIME_ZONE = 'Asia/Shanghai'
+
 USE_I18N = True
-USE_TZ = True # 保持 True 是最佳实践，让 Django 处理时区
+
+# Keeping USE_TZ = True is a best practice for handling timezones correctly
+USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
@@ -129,6 +127,5 @@ STATIC_URL = "static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
-
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
