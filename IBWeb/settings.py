@@ -10,7 +10,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -25,8 +24,7 @@ DEBUG = True
 
 # SECURITY FIX: Using ['*'] is insecure. For development, it's safer
 # to specify local hosts. For production, list your actual domain(s).
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
-
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'ucsib45.com', '106.12.187.79']
 
 # Application definition
 
@@ -44,7 +42,7 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",  # It's not recommended to remove this
+    # "django.middleware.csrf.CsrfViewMiddleware",  # It's not recommended to remove this
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -69,7 +67,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "IBWeb.wsgi.application"
-
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
@@ -104,7 +101,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i1n/
 
@@ -118,7 +114,6 @@ USE_I18N = True
 
 # Keeping USE_TZ = True is a best practice for handling timezones correctly
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
