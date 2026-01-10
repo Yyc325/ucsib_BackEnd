@@ -81,8 +81,7 @@ DATABASES = {
         'NAME': 'python_scene',
         'USER': 'root',
         # DANGER: In a production environment, never hardcode passwords!
-        # 'PASSWORD': '123456',
-        'PASSWORD': 'wuyufeng',
+        'PASSWORD': 'fsssdfa',
         'HOST': '127.0.0.1',
         'PORT': 3306,
     }

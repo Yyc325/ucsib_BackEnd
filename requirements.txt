@@ -1,0 +1,15 @@
+asgiref @ file:///private/var/folders/c_/qfmhj66j0tn016nkx_th4hxm0000gp/T/abs_d2wfxoqk8w/croot/asgiref_1724072473040/work
+certifi==2025.8.3
+charset-normalizer==3.4.3
+Django @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_e0gm4q6gof/croot/django_1745263591633/work
+django-cors-headers==4.9.0
+djangorestframework==3.16.1
+idna==3.10
+PyJWT @ file:///private/var/folders/c_/qfmhj66j0tn016nkx_th4hxm0000gp/T/abs_e3flm2yt7s/croot/pyjwt_1736178900134/work
+PyMySQL @ file:///private/var/folders/sy/f16zz6x50xz3113nwtb9bvq00000gp/T/abs_8d0zejoih8/croot/pymysql_1746768511813/work
+qiniu==7.17.0
+requests==2.32.4
+setuptools==78.1.1
+sqlparse @ file:///private/var/folders/c_/qfmhj66j0tn016nkx_th4hxm0000gp/T/abs_delp7zl09t/croot/sqlparse_1734704454213/work
+urllib3==2.5.0
+wheel==0.45.1

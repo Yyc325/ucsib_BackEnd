@@ -23,6 +23,7 @@ urlpatterns = [
 
     # 1. 核心路由：处理前端发来的 /api/...
     # 这会匹配 /api/admin_role/... 和 /api/comments/...
+    path("", include("community.urls")),
     path("api/admin_role/", include('admin_role.urls')),
     path("api/", include("community.urls")),
 
