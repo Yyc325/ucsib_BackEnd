@@ -1,5 +1,4 @@
 from django.urls import path
-
 import admin_role.views
 
 urlpatterns = [

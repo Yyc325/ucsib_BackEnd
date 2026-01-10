@@ -29,16 +29,20 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'ucsib45.com', '106.12.187.79']
 # Application definition
 
 INSTALLED_APPS = [
+    "corsheaders",
     'django.contrib.admin',  # Recommended to add Django's built-in admin site
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'admin_role.apps.AdminRoleConfig'
+    'admin_role.apps.AdminRoleConfig',
+    'rest_framework',
+    'community',
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -77,7 +81,8 @@ DATABASES = {
         'NAME': 'python_scene',
         'USER': 'root',
         # DANGER: In a production environment, never hardcode passwords!
-        'PASSWORD': '123456',
+        # 'PASSWORD': '123456',
+        'PASSWORD': 'wuyufeng',
         'HOST': '127.0.0.1',
         'PORT': 3306,
     }
@@ -124,3 +129,5 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
